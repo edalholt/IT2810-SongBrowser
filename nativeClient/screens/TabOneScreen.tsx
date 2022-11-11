@@ -34,7 +34,7 @@ export default function TabOneScreen({
   return (
     <ScrollView style={{ backgroundColor: theme.colors.primary }}>
       {data.getSongs.songs.map((song) => (
-        <DropDownCard {...song} />
+        <DropDownCard {...song} key={song._id} />
       ))}
     </ScrollView>
   );
