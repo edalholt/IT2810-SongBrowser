@@ -1,19 +1,11 @@
-import { useQuery, useReactiveVar } from '@apollo/client';
-import { StyleSheet } from 'react-native';
-import { ListItem, useTheme, Input, LinearProgress, ButtonGroup } from '@rneui/themed';
-import { Feather, FontAwesome } from '@expo/vector-icons'; 
-
+import { useReactiveVar } from '@apollo/client';
+import { ButtonGroup } from '@rneui/themed';
 import { songQueryVars, songTotalPages } from '../GraphQL/cache';
-import { GET_SONGS } from '../GraphQL/Queries';
-import { RootTabScreenProps } from '../types';
-import { getSongsInputs, songsDataType } from '../types/songData';
-import { ScrollView, Text, View } from 'react-native';
-import { Button, color } from '@rneui/base';
+import { View } from 'react-native';
 import { useEffect, useState } from 'react';
 
 
 export default function PageControl() {
-  const { theme, updateTheme } = useTheme()
   const [pageIndex, setPageIndex] = useState(1)
   const maxPage = useReactiveVar(songTotalPages);
   const songVars = useReactiveVar(songQueryVars);
@@ -91,6 +83,3 @@ export default function PageControl() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-});
