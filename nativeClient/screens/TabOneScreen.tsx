@@ -26,7 +26,7 @@ export default function TabOneScreen( { navigation }: RootTabScreenProps<'TabOne
       <Input
       placeholder='Search'
       returnKeyType='search'
-      onSubmitEditing={(e)=> songQueryVars({...songVars, search: e.nativeEvent.text})}
+      onSubmitEditing={(e)=> songQueryVars({...songVars, search: e.nativeEvent.text, page: 1})}
       leftIcon={<Ionicons name="md-search-outline" size={24} color={"white"} />}
       style={{
         color: theme.colors.background,
