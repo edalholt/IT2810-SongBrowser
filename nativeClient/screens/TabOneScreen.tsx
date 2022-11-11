@@ -4,7 +4,7 @@ import { useTheme, Input } from "@rneui/themed";
 import { Ionicons } from "@expo/vector-icons";
 import { songQueryVars } from "../GraphQL/cache";
 import { ScrollView } from "react-native";
-import CardsContainer from "../components/cardsContainer";
+import CardsContainer from "../components/CardsContainer";
 import PageControl from "../components/PageControl";
 
 export default function TabOneScreen() {
@@ -12,8 +12,7 @@ export default function TabOneScreen() {
   const { theme, updateTheme } = useTheme();
 
   return (
-    <ScrollView
-      style={{backgroundColor: theme.colors.primary}}>
+    <ScrollView style={{ backgroundColor: theme.colors.primary }}>
       <Input
         placeholder="Search"
         returnKeyType="search"
@@ -34,8 +33,8 @@ export default function TabOneScreen() {
           paddingVertical: 10,
         }}
       />
-    <CardsContainer/>
-    <PageControl/>
+      <CardsContainer />
+      <PageControl />
     </ScrollView>
   );
 }
@@ -43,8 +42,8 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
     padding: 20,
   },
   separator: {
