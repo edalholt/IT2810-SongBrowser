@@ -1,48 +1,19 @@
-import { useQuery, useReactiveVar } from "@apollo/client";
+import { useReactiveVar } from "@apollo/client";
 import { StyleSheet } from "react-native";
-import { ListItem, useTheme, Input, LinearProgress } from "@rneui/themed";
+import { useTheme, Input } from "@rneui/themed";
 import { Ionicons } from "@expo/vector-icons";
-
 import { songQueryVars } from "../GraphQL/cache";
-import { GET_SONGS } from "../GraphQL/Queries";
-import { RootTabScreenProps } from "../types";
-import { getSongsInputs, songsDataType } from "../types/songData";
-import { ScrollView, Text, View } from "react-native";
-import { color } from "@rneui/base";
-import React, { useState } from "react";
-import DropDownCard from "../components/DropDownCard";
+import { ScrollView } from "react-native";
+import CardsContainer from "../components/cardsContainer";
+import PageControl from "../components/PageControl";
 
-export default function TabOneScreen({
-  navigation,
-}: RootTabScreenProps<"TabOne">) {
+export default function TabOneScreen() {
   const songVars = useReactiveVar(songQueryVars);
   const { theme, updateTheme } = useTheme();
-  const [expanded, setExpanded] = useState(false);
 
-  const { loading, error, data } = useQuery<songsDataType, getSongsInputs>(
-    GET_SONGS,
-    {
-      variables: songVars,
-    }
-  );
-
-  if (error)
-    return (
-      <Text style={styles.title}>
-        There was an error. Is the backend running?
-      </Text>
-    );
-  if (!data)
-    return (
-      <View style={{ backgroundColor: theme.colors.primary, height: "100%" }}>
-        <Text style={[styles.title, { color: theme.colors.white }]}>
-          Loading...
-        </Text>
-        <LinearProgress style={{ marginVertical: 10 }} />
-      </View>
-    );
   return (
-    <ScrollView style={{ backgroundColor: theme.colors.primary }}>
+    <ScrollView
+      style={{backgroundColor: theme.colors.primary}}>
       <Input
         placeholder="Search"
         returnKeyType="search"
@@ -63,10 +34,8 @@ export default function TabOneScreen({
           paddingVertical: 10,
         }}
       />
-
-      {data.getSongs.songs.map((song) => (
-        <DropDownCard {...song} key={song._id} />
-      ))}
+    <CardsContainer/>
+    <PageControl/>
     </ScrollView>
   );
 }
@@ -74,12 +43,12 @@ export default function TabOneScreen({
 const styles = StyleSheet.create({
   title: {
     fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    padding: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    padding: 20,
   },
   separator: {
-    marginVertical: 30,
+    marginVertical: 20,
     height: 1,
     width: "100%",
     backgroundColor: "yellow",
