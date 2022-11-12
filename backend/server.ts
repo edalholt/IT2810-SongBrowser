@@ -19,7 +19,7 @@ app.use(
     graphiql: true,
   })
 )
-const uri:string = `mongodb://admin:letmein@it2810-67.idi.ntnu.no:27017/songs?authSource=admin`
+const uri:string = `mongodb://admin:letmein@it2810-67.idi.ntnu.no:27017/songsDB?authSource=admin`
 mongoose
   .connect(uri, { 
       useUnifiedTopology: true, 
