@@ -1,5 +1,7 @@
 import { getSongsArgs, rateSongArgs, searchQueryType } from "../types/resolvers"
+const bcrypt = require('bcrypt');
 const Song = require("../models/song")
+const User = require("../models/user")
 
 module.exports = {
   getSongs: async (args: getSongsArgs) => {
@@ -37,6 +39,23 @@ module.exports = {
     }
   },
 
+  login: async (args: { username: string, password: string; }) => {
+    try {
+      const userData = await User.findOne({username: args.username}).exec();
+      let hash = ""
+      if (userData){
+        hash = userData.password
+      }
+      const match = await bcrypt.compare(args.password, hash);
+      if(match){
+        return userData
+      }
+      return {_id: "Wrong username or password"}
+    } catch (error) {
+      throw error
+    }
+  },
+
   // Connected to mutation for song rating.
   rateSong: async (args: rateSongArgs) => {
     try {
@@ -47,4 +66,18 @@ module.exports = {
       throw error
     }
   },
+
+  newUser: async (args: { username: string, password: string; }) => {
+    try {
+      const hash = await bcrypt.hash(args.password, 10)
+      const user = new User({
+        username: args.username,
+        password: hash
+      })
+      return await user.save()   
+    } catch (error) {
+      throw error
+    }
+  },
+
 }
