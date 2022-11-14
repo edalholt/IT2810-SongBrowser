@@ -78,7 +78,7 @@ module.exports = {
       if(match){
         return userData
       }
-      return {_id: "Wrong username or password"}
+      return {_id: "Not Authorized"}
     } catch (error) {
       throw error
     }

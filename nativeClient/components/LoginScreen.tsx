@@ -61,6 +61,7 @@ export default function LoginScreen() {
 
     <Text>{feedback}</Text>
     <Button title="Login" type="solid" onPress={() => {setSkip(false); setLogin({username: username, password: password})}} />
+    <Text style={{marginTop: '5%'}}>New? register a user here</Text>
     </View>
         </>
   );

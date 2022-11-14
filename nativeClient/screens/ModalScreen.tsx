@@ -1,22 +1,73 @@
-import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet } from 'react-native';
-import { View, Text } from 'react-native';
-import EditScreenInfo from '../components/LoginScreen';
+import { Text, TextInput, View} from 'react-native';
+import { StyleSheet } from 'react-native';
+import { useTheme, Input } from "@rneui/themed";
+import { Button } from '@rneui/themed';
+import { useState, useEffect } from 'react';
+import { LOGIN } from '../GraphQL/Queries';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
+import { isLoggedIn } from '../GraphQL/cache';
+import * as SecureStore from 'expo-secure-store';
+import { REGISTER } from '../GraphQL/Mutations';
 
-export default function ModalScreen() {
+
+
+export default function LoginScreen() {
+  const { theme, updateTheme } = useTheme();
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [feedback, setFeedback] = useState("")
+  const [register, {error, data}] = useMutation(REGISTER, {
+    onError: (err) => {
+      setFeedback("Username is not available")
+  }
+  });
+
+  useEffect(() => {
+    if(data){
+      SecureStore.setItemAsync("token", data.newUser._id).then(() => {
+      isLoggedIn(true)
+      setFeedback("User created")
+     } )
+    }
+  }, [data])
+  
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Modal</Text>
-      <View style={styles.separator} />
-      <EditScreenInfo path="/screens/ModalScreen.tsx" />
+      <>
+      <View style={styles.container}>
+      <Text style={styles.title}>Register</Text>
+      <View style={[styles.separator, {backgroundColor: theme.colors.primary}]} />
+      
+      <TextInput
+        autoCapitalize={'none'}
+        style={styles.input}
+        onChangeText={(text) => setUsername(text)}
+        placeholder={"Username"}
+      />
 
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+    <TextInput
+            autoCapitalize={'none'}
+            secureTextEntry={true}
+            style={styles.input}
+            onChangeText={(text) => setPassword(text)}
+            placeholder={"Password"}
+          />
+
+    <Text>{feedback}</Text>
+    <Button title="Sign Up" type="solid" onPress={() => register({variables: {username: username, password: password}})} />
     </View>
+        </>
   );
-}
+};
 
 const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    width: "80%"
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -32,3 +83,5 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 });
+
+
