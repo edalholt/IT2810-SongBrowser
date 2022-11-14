@@ -16,12 +16,26 @@ module.exports = buildSchema(`
     acousticness: Float!
     key: Int!
     rating: Int
+    isLiked: Boolean
+  }
+
+  type User {
+    _id: ID!
+    username: String!
+    password: String!
+    likedSongs: [String]
+  }
+
+  type UserMin {
+    _id: ID
+    username: String
+    likedSongs: [String]
   }
 
   type SongQuery {
     songs: [Song!]
-    page: Int!
-    totalPages: Int!
+    page: Int
+    totalPages: Int
   }
 
   enum Sort {
@@ -44,11 +58,15 @@ module.exports = buildSchema(`
   }
 
   type Query {
-    getSongs(orderBy: OrderBySelect, page: Int, pageSize: Int, search: String, year: Int): SongQuery
+    getSongs(orderBy: OrderBySelect, page: Int, pageSize: Int, search: String, year: Int, uid: String): SongQuery
+    getUserSongs(uid: String!): SongQuery
+    login(username: String!, password: String!): UserMin
   }
 
   type Mutation {
     rateSong(_id: ID!, rating: Int): Song
+    newUser(username: String!, password: String!): UserMin
+    userSongListToggle(uid: String!, songID: String!): User
   }
 
   schema {
