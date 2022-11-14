@@ -11,7 +11,7 @@ export default function App() {
   const colorScheme = useColorScheme();
 
   const client = new ApolloClient({
-    uri: 'http://it2810-67.idi.ntnu.no:4000/graphql',
+    uri: 'http://localhost:4050/graphql',
     cache: new InMemoryCache()
   });
 
@@ -27,7 +27,6 @@ export default function App() {
     },
     mode: colorScheme || "dark",
   });
-  console.log(theme.mode)
   
   if (!isLoadingComplete) {
     return null;

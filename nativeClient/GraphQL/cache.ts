@@ -9,3 +9,4 @@ export const songQueryVars = makeVar<getSongsInputs>({
 });
 export const songCurrentPage = makeVar<number>(1);
 export const songTotalPages = makeVar<number>(1);
+export const isLoggedIn = makeVar<boolean>(false);
