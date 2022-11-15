@@ -1,33 +1,26 @@
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from 'react-native';
-import { useTheme } from '@rneui/themed';
+import { useReactiveVar } from '@apollo/client';
+import LoginScreen from '../components/LoginScreen';
+import ProfilePage from '../components/ProfilePage';
+import { isLoggedIn } from '../GraphQL/cache';
+import * as SecureStore from 'expo-secure-store';
+import { useEffect } from 'react';
 
 export default function TabTwoScreen() {
-  const { theme, updateTheme } = useTheme()
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={[styles.separator, {backgroundColor: theme.colors.primary}]} />
-      <EditScreenInfo path="/screens/TabTwoScreen.tsx" />
-    </View>
-  );
-}
+  const login = useReactiveVar(isLoggedIn)
+  
+  const CheckLogin = async () => {
+     if(await SecureStore.getItemAsync("token")){
+      isLoggedIn(true)
+     }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+  }
+
+  useEffect(() => {
+    CheckLogin()
+  }, [])
+  
+
+  if(login) return <ProfilePage/>
+  else return <LoginScreen/>
+
+}

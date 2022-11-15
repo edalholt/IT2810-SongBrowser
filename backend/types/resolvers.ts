@@ -2,7 +2,8 @@ export type getSongsArgs = {
     page: number, 
     pageSize: number, 
     search: string, 
-    year: number, 
+    year: number,
+    uid: string, 
     orderBy?: {
         year?: string, 
         popularity?: string, 
@@ -10,6 +11,23 @@ export type getSongsArgs = {
         duration_ms?: string
     } 
   };
+
+export type SongType = {
+    _id: string
+    name: string
+    artists: string[]
+    year: number
+    energy: number
+    popularity: number
+    tempo: number
+    duration_ms: number
+    danceability: number
+    explicit: boolean
+    acousticness: number
+    key: number
+    rating?: number
+    isLiked?: boolean
+  }
 
 export type searchQueryType = {
     $or: ({ 

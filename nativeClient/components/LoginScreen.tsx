@@ -4,10 +4,9 @@ import { useTheme, Input } from "@rneui/themed";
 import { Button } from '@rneui/themed';
 import { useState, useEffect } from 'react';
 import { LOGIN } from '../GraphQL/Queries';
-import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
+import { useQuery, useReactiveVar } from '@apollo/client';
 import { isLoggedIn } from '../GraphQL/cache';
 import * as SecureStore from 'expo-secure-store';
-import { REGISTER } from '../GraphQL/Mutations';
 
 
 
@@ -16,18 +15,25 @@ export default function LoginScreen() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [feedback, setFeedback] = useState("")
-  const [register, {error, data}] = useMutation(REGISTER, {
-    onError: (err) => {
-      setFeedback("Username is not available")
-  }
+  const [login, setLogin] = useState({username: "", password: ""})
+  const loggedIn = useReactiveVar(isLoggedIn);
+  const [skip, setSkip] = useState(true)
+
+  const { loading, error, data } = useQuery(LOGIN, {
+    variables: login,
+    skip: skip
   });
 
   useEffect(() => {
     if(data){
-      SecureStore.setItemAsync("token", data.newUser._id).then(() => {
-      isLoggedIn(true)
-      setFeedback("User created")
-     } )
+      if(data.login._id == "Not Authorized"){
+        setFeedback("Wrong username or password")
+      }
+      else{
+        SecureStore.setItemAsync("token", data.login._id).then(() =>
+          isLoggedIn(true) 
+        )
+      }
     }
   }, [data])
   
@@ -35,7 +41,7 @@ export default function LoginScreen() {
   return (
       <>
       <View style={styles.container}>
-      <Text style={styles.title}>Register</Text>
+      <Text style={styles.title}>Login</Text>
       <View style={[styles.separator, {backgroundColor: theme.colors.primary}]} />
       
       <TextInput
@@ -54,7 +60,8 @@ export default function LoginScreen() {
           />
 
     <Text>{feedback}</Text>
-    <Button title="Sign Up" type="solid" onPress={() => register({variables: {username: username, password: password}})} />
+    <Button title="Login" type="solid" onPress={() => {setSkip(false); setLogin({username: username, password: password})}} />
+    <Text style={{marginTop: '5%'}}>New? register a user here</Text>
     </View>
         </>
   );
