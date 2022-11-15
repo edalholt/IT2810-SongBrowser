@@ -9,3 +9,12 @@ export const RATE_SONG = gql`
     }
   }
 `;
+
+
+export const REGISTER = gql`
+  mutation($username: String!, $password: String!) {
+    newUser(username: $username, password: $password){
+      _id
+    }
+  }
+`;

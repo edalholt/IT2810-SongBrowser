@@ -72,6 +72,14 @@ function BottomTabNavigator() {
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
           title: 'Zpotify navigatr',
           tabBarIcon: ({ color }) => <Fontisto name="music-note" size={24} color={color} />,
+        })}
+      />
+      <BottomTab.Screen
+        name="TabTwo"
+        component={TabTwoScreen}
+        options={({ navigation }: RootTabScreenProps<'TabTwo'>) => ({
+          title: 'Tab Two',
+          tabBarIcon: ({ color }) => <Ionicons name="md-person" size={24} color={color} />,
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}
@@ -79,7 +87,7 @@ function BottomTabNavigator() {
                 opacity: pressed ? 0.5 : 1,
               })}>
               <FontAwesome
-                name="info-circle"
+                name="user-plus"
                 size={25}
                 color={theme.colors.primary}
                 style={{ marginRight: 15 }}
@@ -87,14 +95,6 @@ function BottomTabNavigator() {
             </Pressable>
           ),
         })}
-      />
-      <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <Ionicons name="md-person" size={24} color={color} />,
-        }}
       />
     </BottomTab.Navigator>
   );

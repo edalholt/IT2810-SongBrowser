@@ -9,7 +9,7 @@ const app = express()
 app.use(cors());
 //Allowing react on same machine, port 3000 to send requests to backend
 app.options('http://localhost:3000/', cors());
-const port:Number = 4000
+const port:Number = 4050
 
 app.use(
   "/graphql",
