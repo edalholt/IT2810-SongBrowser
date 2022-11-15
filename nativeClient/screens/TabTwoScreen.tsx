@@ -4,8 +4,10 @@ import ProfilePage from '../components/ProfilePage';
 import { isLoggedIn } from '../GraphQL/cache';
 import * as SecureStore from 'expo-secure-store';
 import { useEffect } from 'react';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types/navigationTypes';
 
-export default function TabTwoScreen() {
+export default function TabTwoScreen({ navigation }: NativeStackScreenProps<RootStackParamList, 'Root'>) {
   const login = useReactiveVar(isLoggedIn)
   
   const CheckLogin = async () => {
@@ -21,6 +23,6 @@ export default function TabTwoScreen() {
   
 
   if(login) return <ProfilePage/>
-  else return <LoginScreen/>
+  else return <LoginScreen navigation={navigation} route={undefined}/>
 
 }

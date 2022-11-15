@@ -7,10 +7,11 @@ import { LOGIN } from '../GraphQL/Queries';
 import { useQuery, useReactiveVar } from '@apollo/client';
 import { isLoggedIn } from '../GraphQL/cache';
 import * as SecureStore from 'expo-secure-store';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types/navigationTypes';
 
 
-
-export default function LoginScreen() {
+export default function LoginScreen({ navigation } : NativeStackScreenProps<RootStackParamList, 'Root'>) {
   const { theme, updateTheme } = useTheme();
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
@@ -61,7 +62,7 @@ export default function LoginScreen() {
 
     <Text>{feedback}</Text>
     <Button title="Login" type="solid" onPress={() => {setSkip(false); setLogin({username: username, password: password})}} />
-    <Text style={{marginTop: '5%'}}>New? register a user here</Text>
+    <Text style={{marginTop: '5%'}} onPress={() => navigation.navigate("Modal")}>New? register a user here</Text>
     </View>
         </>
   );

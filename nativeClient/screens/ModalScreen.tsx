@@ -8,10 +8,11 @@ import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { isLoggedIn } from '../GraphQL/cache';
 import * as SecureStore from 'expo-secure-store';
 import { REGISTER } from '../GraphQL/Mutations';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types/navigationTypes';
 
 
-
-export default function LoginScreen() {
+export default function LoginScreen({ navigation } : NativeStackScreenProps<RootStackParamList, 'Modal'>) {
   const { theme, updateTheme } = useTheme();
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
@@ -27,6 +28,7 @@ export default function LoginScreen() {
       SecureStore.setItemAsync("token", data.newUser._id).then(() => {
       isLoggedIn(true)
       setFeedback("User created")
+      navigation.navigate("Root")
      } )
     }
   }, [data])
