@@ -7,11 +7,12 @@ import { LOGIN } from '../GraphQL/Queries';
 import { useQuery, useReactiveVar } from '@apollo/client';
 import { isLoggedIn } from '../GraphQL/cache';
 import * as SecureStore from 'expo-secure-store';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../types/navigationTypes';
+import { LoginScreenNavProps } from '../types/navigationTypes';
+import { useNavigation } from '@react-navigation/native';
 
 
-export default function LoginScreen({ navigation } : NativeStackScreenProps<RootStackParamList, 'Root'>) {
+export default function LoginScreen() {
+  const navigation = useNavigation<LoginScreenNavProps>();
   const { theme, updateTheme } = useTheme();
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")

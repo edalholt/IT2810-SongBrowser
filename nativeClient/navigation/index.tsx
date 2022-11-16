@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTheme } from '@rneui/themed';
 import * as React from 'react';
 import { Pressable } from 'react-native';
+import { RootStackParamList } from '../types/navigationTypes';
 
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
@@ -20,7 +21,7 @@ export default function Navigation() {
   );
 }
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
@@ -35,7 +36,7 @@ function RootNavigator() {
 }
 
 
-const BottomTab = createBottomTabNavigator();
+const BottomTab = createBottomTabNavigator<RootStackParamList>();
 
 function BottomTabNavigator(): JSX.Element {
   const { theme, updateTheme } = useTheme()

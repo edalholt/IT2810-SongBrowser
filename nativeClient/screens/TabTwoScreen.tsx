@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigationTypes';
 
-export default function TabTwoScreen({ navigation }: NativeStackScreenProps<RootStackParamList, 'Root'>) {
+export default function TabTwoScreen({ navigation }: NativeStackScreenProps<RootStackParamList, 'TabTwo'>) {
   const login = useReactiveVar(isLoggedIn)
   
   const CheckLogin = async () => {
@@ -23,6 +23,6 @@ export default function TabTwoScreen({ navigation }: NativeStackScreenProps<Root
   
 
   if(login) return <ProfilePage/>
-  else return <LoginScreen navigation={navigation} route={undefined}/>
+  else return <LoginScreen/>
 
 }
