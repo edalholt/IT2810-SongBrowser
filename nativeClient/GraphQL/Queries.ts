@@ -1,10 +1,22 @@
-import { gql } from '@apollo/client'
-import { OrderBySelect } from '../types/order'
+import { gql } from "@apollo/client";
+import { OrderBySelect } from "../types/order";
 
 export const GET_SONGS = gql`
-  query($search: String, $page: Int, $pageSize: Int, $orderBy: OrderBySelect) {
-    getSongs(search: $search, page: $page, pageSize: $pageSize, orderBy: $orderBy) {
-      songs{
+  query (
+    $uid: String
+    $search: String
+    $page: Int
+    $pageSize: Int
+    $orderBy: OrderBySelect
+  ) {
+    getSongs(
+      search: $search
+      uid: $uid
+      page: $page
+      pageSize: $pageSize
+      orderBy: $orderBy
+    ) {
+      songs {
         _id
         name
         artists
@@ -14,6 +26,7 @@ export const GET_SONGS = gql`
         explicit
         popularity
         rating
+        isLiked
       }
       page
       totalPages
@@ -21,10 +34,9 @@ export const GET_SONGS = gql`
   }
 `;
 
-
 export const LOGIN = gql`
-  query($username: String!, $password: String!) {
-    login(username: $username, password: $password){
+  query ($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
       _id
     }
   }

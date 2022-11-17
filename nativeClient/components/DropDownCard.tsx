@@ -4,12 +4,19 @@ import { useTheme } from "@rneui/themed";
 import { songType } from "../types/songData";
 import { StyleSheet, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { LoginScreenNavProps } from "../types/navigationTypes";
+import { useMutation, useReactiveVar } from "@apollo/client";
+import { TOGGLE_SONGLIST } from "../GraphQL/Mutations";
+import { songQueryVars } from "../GraphQL/cache";
+import { GET_SONGS } from "../GraphQL/Queries";
+
 export default function DropDownCard(song: songType) {
   const [expanded, setExpanded] = useState(false);
   const { theme, updateTheme } = useTheme();
-
-  //midlertidig, skal erstattes med logikk for å legge til i Liked listen
-  const [added, setAdded] = useState(false);
+  const navigation = useNavigation<LoginScreenNavProps>();
+  const [toggleSong] = useMutation(TOGGLE_SONGLIST);
+  const queryvar = useReactiveVar(songQueryVars);
 
   const styles = StyleSheet.create({
     content: {
@@ -63,7 +70,7 @@ export default function DropDownCard(song: songType) {
           <ListItem.Title style={{ flexBasis: "51%" }}>
             Released: {song.year}
           </ListItem.Title>
-          {added ? (
+          {song.isLiked ? (
             <ListItem.Content style={styles.AddToList}>
               <ListItem.Title>Remove from list</ListItem.Title>
               <MaterialIcons
@@ -71,20 +78,35 @@ export default function DropDownCard(song: songType) {
                 size={28}
                 color={theme.colors.success}
                 //midlertidig, skal erstattes med logikk for å legge til i Liked listen
-                onPress={(e) => setAdded(!added)}
+                onPress={() => {
+                  toggleSong({
+                    variables: { uid: queryvar.uid, songID: song._id },
+                    refetchQueries: [GET_SONGS],
+                  });
+                }}
               />
             </ListItem.Content>
-          ) : (
+          ) : song.isLiked != null ? (
             <ListItem.Content style={styles.AddToList}>
               <ListItem.Title>Add to list</ListItem.Title>
+
               <MaterialIcons
                 name="playlist-add"
                 size={28}
                 color={theme.colors.black}
                 //midlertidig, skal erstattes med logikk for å legge til i Liked listen
-                onPress={(e) => setAdded(!added)}
+                onPress={() =>
+                  toggleSong({
+                    variables: { uid: queryvar.uid, songID: song._id },
+                    refetchQueries: [GET_SONGS],
+                  })
+                }
               />
             </ListItem.Content>
+          ) : (
+            <ListItem.Subtitle onPress={() => navigation.navigate("Profile")}>
+              Log in to save this song
+            </ListItem.Subtitle>
           )}
         </ListItem.Content>
       </ListItem>
