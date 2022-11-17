@@ -3,14 +3,15 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTheme } from '@rneui/themed';
-import * as React from 'react';
 import { Pressable } from 'react-native';
+import { Text } from 'react-native';
 import { RootStackParamList } from '../types/navigationTypes';
-
-import ModalScreen from '../screens/ModalScreen';
+import RegisterModal from '../screens/RegisterModal';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import SongBrowserScreen from '../screens/SongBrowserScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import { isLoggedIn } from '../GraphQL/cache';
+import { useReactiveVar } from '@apollo/client';
 
 export default function Navigation() {
   
@@ -29,7 +30,7 @@ function RootNavigator() {
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+        <Stack.Screen name="SignUp" component={RegisterModal} />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -40,41 +41,49 @@ const BottomTab = createBottomTabNavigator<RootStackParamList>();
 
 function BottomTabNavigator(): JSX.Element {
   const { theme, updateTheme } = useTheme()
+  const login = useReactiveVar(isLoggedIn)
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="SongBrowser"
       screenOptions={{
         tabBarActiveTintColor: theme.colors.white,
         tabBarStyle:{backgroundColor: theme.colors.searchBg}
       }}>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
+        name="SongBrowser"
+        component={SongBrowserScreen}
         options={({ navigation }) => ({
           title: 'Zpotify navigatr',
           tabBarIcon: ({ color }) => <Fontisto name="music-note" size={24} color={color} />,
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
+        name="Profile"
+        component={ProfileScreen}
         options={({ navigation }) => ({
           title: 'Profile',
           tabBarIcon: ({ color }) => <Ionicons name="md-person" size={24} color={color} />,
           headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
+            (!login) ? (
+              <Pressable
+              onPress={() => navigation.navigate('SignUp')}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-evenly',
               })}>
+              <Text style={{marginRight: '5%'}}>Sign Up</Text>
               <FontAwesome
                 name="user-plus"
                 size={25}
                 color={theme.colors.primary}
-                style={{ marginRight: 15 }}
+                style={{ marginRight: 10 }}
               />
             </Pressable>
+            ) : (null)
           ),
         })}
       />

@@ -12,7 +12,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/navigationTypes';
 
 
-export default function LoginScreen({ navigation } : NativeStackScreenProps<RootStackParamList, 'Modal'>) {
+export default function RegisterModal({ navigation } : NativeStackScreenProps<RootStackParamList, 'SignUp'>) {
   const { theme, updateTheme } = useTheme();
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")

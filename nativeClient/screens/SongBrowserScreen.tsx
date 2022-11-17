@@ -7,7 +7,7 @@ import { ScrollView } from "react-native";
 import CardsContainer from "../components/CardsContainer";
 import PageControl from "../components/PageControl";
 
-export default function TabOneScreen() {
+export default function SongBrowserScreen() {
   const songVars = useReactiveVar(songQueryVars);
   const { theme, updateTheme } = useTheme();
 

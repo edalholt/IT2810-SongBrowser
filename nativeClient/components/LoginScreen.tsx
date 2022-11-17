@@ -62,8 +62,8 @@ export default function LoginScreen() {
           />
 
     <Text>{feedback}</Text>
-    <Button title="Login" type="solid" onPress={() => {setSkip(false); setLogin({username: username, password: password})}} />
-    <Text style={{marginTop: '5%'}} onPress={() => navigation.navigate("Modal")}>New? register a user here</Text>
+    <Button title="Log in" type="solid" onPress={() => {setSkip(false); setLogin({username: username, password: password})}} />
+    <Text style={{marginTop: '5%', textDecorationLine: 'underline'}} onPress={() => navigation.navigate("SignUp")}>New? Register a user here</Text>
     </View>
         </>
   );

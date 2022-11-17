@@ -5,9 +5,9 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
     Root: undefined;
-    Modal: undefined;
-    TabTwo: undefined;
-    TabOne: undefined;
+    SignUp: undefined;
+    Profile: undefined;
+    SongBrowser: undefined;
     NotFound: undefined;
   };
 
