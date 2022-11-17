@@ -1,13 +1,11 @@
-import { StatusBar } from "expo-status-bar";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { ThemeProvider, Button, createTheme } from "@rneui/themed";
-import { useColorScheme } from "react-native";
-import useCachedResources from "./hooks/useCachedResources";
-import Navigation from "./navigation";
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ThemeProvider, createTheme } from '@rneui/themed';
+import { useColorScheme } from 'react-native';
+import Navigation from './navigation';
 
 export default function App() {
-  const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
   const client = new ApolloClient({
@@ -32,18 +30,14 @@ export default function App() {
     mode: colorScheme || "dark",
   });
   
-  if (!isLoadingComplete) {
-    return null;
-  } else {
     return (
       <SafeAreaProvider>
         <ThemeProvider theme={theme}>
-          <ApolloProvider client={client}>
-            <Navigation colorScheme={colorScheme} />
-            <StatusBar />
-          </ApolloProvider>
+        <ApolloProvider client={client}>
+        <Navigation/>
+        <StatusBar />
+        </ApolloProvider>
         </ThemeProvider>
       </SafeAreaProvider>
     );
   }
-}

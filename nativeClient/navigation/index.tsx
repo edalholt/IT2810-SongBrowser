@@ -1,124 +1,91 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
-import { Fontisto, Ionicons, FontAwesome } from "@expo/vector-icons";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
-} from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useTheme } from "@rneui/themed";
-import * as React from "react";
-import { ColorSchemeName, Pressable } from "react-native";
+import { Fontisto, Ionicons, FontAwesome } from '@expo/vector-icons'; 
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useTheme } from '@rneui/themed';
+import { Pressable } from 'react-native';
+import { Text } from 'react-native';
+import { RootStackParamList } from '../types/navigationTypes';
+import RegisterModal from '../screens/RegisterModal';
+import NotFoundScreen from '../screens/NotFoundScreen';
+import SongBrowserScreen from '../screens/SongBrowserScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import { isLoggedIn } from '../GraphQL/cache';
+import { useReactiveVar } from '@apollo/client';
 
-import ModalScreen from "../screens/ModalScreen";
-import NotFoundScreen from "../screens/NotFoundScreen";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
-import {
-  RootStackParamList,
-  RootTabParamList,
-  RootTabScreenProps,
-} from "../types";
-import LinkingConfiguration from "./LinkingConfiguration";
-
-export default function Navigation({
-  colorScheme,
-}: {
-  colorScheme: ColorSchemeName;
-}) {
-  const { theme, updateTheme } = useTheme();
+export default function Navigation() {
+  
   return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-    >
+    <NavigationContainer>
       <RootNavigator />
     </NavigationContainer>
   );
 }
 
-/**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
- */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="Root"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="NotFound"
-        component={NotFoundScreen}
-        options={{ title: "Oops!" }}
-      />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <Stack.Group screenOptions={{ presentation: 'modal' }}>
+        <Stack.Screen name="SignUp" component={RegisterModal} />
       </Stack.Group>
     </Stack.Navigator>
   );
 }
 
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
-function BottomTabNavigator() {
-  const { theme, updateTheme } = useTheme();
+const BottomTab = createBottomTabNavigator<RootStackParamList>();
+
+function BottomTabNavigator(): JSX.Element {
+  const { theme, updateTheme } = useTheme()
+  const login = useReactiveVar(isLoggedIn)
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="SongBrowser"
       screenOptions={{
         tabBarActiveTintColor: theme.colors.white,
-        tabBarStyle: { backgroundColor: theme.colors.grey0 },
-      }}
-    >
+        tabBarStyle:{backgroundColor: theme.colors.searchBg}
+      }}>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
-          title: "Zpotify navigatr",
-          tabBarIcon: ({ color }) => (
-            <Fontisto name="music-note" size={24} color={color} />
-          ),
+        name="SongBrowser"
+        component={SongBrowserScreen}
+        options={({ navigation }) => ({
+          title: 'Zpotify navigatr',
+          tabBarIcon: ({ color }) => <Fontisto name="music-note" size={24} color={color} />,
+        })}
+      />
+      <BottomTab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={({ navigation }) => ({
+          title: 'Profile',
+          tabBarIcon: ({ color }) => <Ionicons name="md-person" size={24} color={color} />,
           headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate("Modal")}
+            (!login) ? (
+              <Pressable
+              onPress={() => navigation.navigate('SignUp')}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
-              })}
-            >
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-evenly',
+              })}>
+              <Text style={{marginRight: '5%'}}>Sign Up</Text>
               <FontAwesome
                 name="user-plus"
                 size={25}
                 color={theme.colors.primary}
-                style={{ marginRight: 15 }}
+                style={{ marginRight: 10 }}
               />
             </Pressable>
+            ) : (null)
           ),
         })}
-      />
-      <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
-        options={{
-          title: "Tab Two",
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="md-person" size={24} color={color} />
-          ),
-        }}
       />
     </BottomTab.Navigator>
   );

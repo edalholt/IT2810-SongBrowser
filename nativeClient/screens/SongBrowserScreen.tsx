@@ -10,7 +10,7 @@ import SortSongs from "../components/SortSongs";
 import React, { useState } from "react";
 import { color } from "@rneui/base";
 
-export default function TabOneScreen() {
+export default function SongBrowserScreen() {
   const songVars = useReactiveVar(songQueryVars);
   const { theme, updateTheme } = useTheme();
   const [activeBar, setActiveBar] = useState(false);
