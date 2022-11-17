@@ -27,7 +27,6 @@ export default function DropDownCard(song: songType) {
   });
   return (
     <ListItem.Accordion
-      key={song._id}
       containerStyle={{
         backgroundColor: theme.colors.grey1,
         borderTopColor: theme.colors.primary,

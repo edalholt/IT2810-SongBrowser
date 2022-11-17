@@ -53,8 +53,8 @@ export default function cardsContainer() {
     <>
       {data.getSongs.songs.map((song) => (
         //View is here only to make sorting dropdown appear above the DropDownCards
-        <View style={{ zIndex: -1 }}>
-          <DropDownCard {...song} key={song._id} />
+        <View style={{ zIndex: -1 }} key={song._id}>
+          <DropDownCard {...song} />
         </View>
       ))}
     </>
