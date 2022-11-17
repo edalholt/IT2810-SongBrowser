@@ -1,38 +1,67 @@
 import { useReactiveVar } from "@apollo/client";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import { useTheme, Input } from "@rneui/themed";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { songQueryVars } from "../GraphQL/cache";
 import { ScrollView } from "react-native";
 import CardsContainer from "../components/CardsContainer";
 import PageControl from "../components/PageControl";
+import SortSongs from "../components/SortSongs";
+import React, { useState } from "react";
+import { color } from "@rneui/base";
 
 export default function SongBrowserScreen() {
   const songVars = useReactiveVar(songQueryVars);
   const { theme, updateTheme } = useTheme();
+  const [activeBar, setActiveBar] = useState(false);
+  const [iconColor, setIconColor] = useState("#FFFFFF");
 
   return (
     <ScrollView style={{ backgroundColor: theme.colors.primary }}>
-      <Input
-        placeholder="Search"
-        returnKeyType="search"
-        onSubmitEditing={(e) =>
-          songQueryVars({ ...songVars, search: e.nativeEvent.text, page: 1 })
-        }
-        leftIcon={
-          <Ionicons name="md-search-outline" size={24} color={"white"} />
-        }
+      <View
         style={{
-          color: theme.colors.background,
           backgroundColor: theme.colors.grey0,
           borderColor: "transparent",
-          borderWidth: 0,
           borderRadius: 10,
-          padding: 10,
-          margin: 10,
-          paddingVertical: 10,
+          height: 60,
+          marginVertical: "5%",
+          marginHorizontal: "2%",
+          flex: 1,
+          flexDirection: "row",
+          justifyContent: "flex-start",
+          alignItems: "center",
         }}
-      />
+      >
+        <Ionicons
+          name="md-search-outline"
+          size={28}
+          color={iconColor}
+          style={{ padding: 15 }}
+        />
+        <TextInput
+          placeholder="Search"
+          returnKeyType="search"
+          placeholderTextColor={"#808080"}
+          onSubmitEditing={(e) => {
+            songQueryVars({ ...songVars, search: e.nativeEvent.text, page: 1 });
+            setActiveBar(!activeBar);
+          }}
+          onFocus={() => setIconColor(theme.colors.white)}
+          onBlur={() => setIconColor("#FFFFFF")}
+          style={{
+            color: theme.colors.background,
+            backgroundColor: theme.colors.grey0,
+            borderColor: "transparent",
+            height: 60,
+            flexBasis: "80%",
+            borderRadius: 10,
+            fontWeight: "600",
+          }}
+        ></TextInput>
+        <View style={{ margin: -15 }}>
+          <SortSongs />
+        </View>
+      </View>
       <CardsContainer />
       <PageControl />
     </ScrollView>
