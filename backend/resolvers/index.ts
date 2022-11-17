@@ -32,7 +32,7 @@ module.exports = {
       // Map is ok here because we perform the operation after pagination, and the performance cost is therefore acceptable.
       if(args.uid){
         const userData = await User.findById(args.uid).exec();
-        console.log(userData)
+
         songsFetched.map((song: SongType) => {
           if(userData.likedSongs.includes(song._id)){ 
             song.isLiked = true
@@ -59,6 +59,17 @@ module.exports = {
       const userData = await User.findById(args.uid).exec();
       // Fetch all liked songs by the user
       const userSongList = await Song.find({ '_id': { $in: userData.likedSongs } }).exec();
+
+      // If user is logged in (give their id), we append isLiked to songs returned
+      // Map is ok here because we perform the operation after pagination, and the performance cost is therefore acceptable.
+      userSongList.map((song: SongType) => {
+          if(userData.likedSongs.includes(song._id)){ 
+            song.isLiked = true
+          } 
+          else { 
+            song.isLiked = false
+          }} )
+        
       return {songs: userSongList}
 
     } catch (error) {

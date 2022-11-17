@@ -9,7 +9,7 @@ import { LoginScreenNavProps } from "../types/navigationTypes";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { TOGGLE_SONGLIST } from "../GraphQL/Mutations";
 import { songQueryVars } from "../GraphQL/cache";
-import { GET_SONGS } from "../GraphQL/Queries";
+import { GET_SONGS, GET_USER_SONGS } from "../GraphQL/Queries";
 
 export default function DropDownCard(song: songType) {
   const [expanded, setExpanded] = useState(false);
@@ -81,7 +81,7 @@ export default function DropDownCard(song: songType) {
                 onPress={() => {
                   toggleSong({
                     variables: { uid: queryvar.uid, songID: song._id },
-                    refetchQueries: [GET_SONGS],
+                    refetchQueries: [GET_SONGS, GET_USER_SONGS],
                   });
                 }}
               />
@@ -98,7 +98,7 @@ export default function DropDownCard(song: songType) {
                 onPress={() =>
                   toggleSong({
                     variables: { uid: queryvar.uid, songID: song._id },
-                    refetchQueries: [GET_SONGS],
+                    refetchQueries: [GET_SONGS, GET_USER_SONGS],
                   })
                 }
               />

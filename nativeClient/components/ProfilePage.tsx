@@ -29,13 +29,14 @@ function ProfilePage() {
 
   return (
     <>
-      {data.getUserSongs.songs.map((song) => {
-        <View>
-          <Text>{song.name}</Text>
-        </View>;
-      })}
-
-      <Button title="Logout" type="solid" onPress={() => logout()} />
+      <Button style={{marginBottom: '5%'}} title="Logout" type="solid" onPress={() => logout()} />
+      <Text>My songlist</Text>
+      {data.getUserSongs.songs.map((song) => (
+        //View is here only to make sorting dropdown appear above the DropDownCards
+        <View style={{ zIndex: -1 }} key={song._id}>
+          <DropDownCard {...song} />
+        </View>
+      ))}
     </>
   );
 }
