@@ -5,6 +5,7 @@ export type getSongsInputs = {
   page: number;
   pageSize?: number;
   orderBy?: { [key in SortBy]?: SortTypes };
+  uid?: string | null;
 };
 
 export type songsType = {
@@ -23,6 +24,7 @@ export type songType = {
   duration_ms: number;
   popularity: number;
   rating: number | null;
+  isLiked: boolean | null;
 };
 
 export type songsDataType = {
