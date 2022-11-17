@@ -1,16 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import { ThemeProvider, createTheme } from '@rneui/themed';
-import { useColorScheme } from 'react-native';
-import Navigation from './navigation';
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { ThemeProvider, createTheme } from "@rneui/themed";
+import { useColorScheme } from "react-native";
+import Navigation from "./navigation";
 
 export default function App() {
   const colorScheme = useColorScheme();
 
   const client = new ApolloClient({
-    uri: 'http://localhost:4050/graphql',
-    cache: new InMemoryCache()
+    uri: "http://it2810-67.idi.ntnu.no:4050/graphql",
+    cache: new InMemoryCache(),
   });
 
   const theme = createTheme({
@@ -29,15 +29,15 @@ export default function App() {
     },
     mode: colorScheme || "dark",
   });
-  
-    return (
-      <SafeAreaProvider>
-        <ThemeProvider theme={theme}>
+
+  return (
+    <SafeAreaProvider>
+      <ThemeProvider theme={theme}>
         <ApolloProvider client={client}>
-        <Navigation/>
-        <StatusBar />
+          <Navigation />
+          <StatusBar />
         </ApolloProvider>
-        </ThemeProvider>
-      </SafeAreaProvider>
-    );
-  }
+      </ThemeProvider>
+    </SafeAreaProvider>
+  );
+}

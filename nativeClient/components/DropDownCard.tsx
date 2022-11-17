@@ -53,16 +53,16 @@ export default function DropDownCard(song: songType) {
     >
       <ListItem containerStyle={{ backgroundColor: theme.colors.grey1 }}>
         <ListItem.Content style={styles.content}>
-          <ListItem.Title style={{ flexBasis: "100%" }}>
-            Artist:
+          <ListItem.Subtitle style={{ flexBasis: "100%" }}>
+            <ListItem.Title>Artists:</ListItem.Title>
             {"\n"}
             {song.artists.map((e) => {
               return e + "\n";
             })}{" "}
-          </ListItem.Title>
+          </ListItem.Subtitle>
 
           <ListItem.Title style={{ flexBasis: "51%" }}>
-            Danceability: {song.danceability.toFixed(4)}
+            Danceability: {(song.danceability * 100).toFixed()}%
           </ListItem.Title>
           <ListItem.Title style={{ flexBasis: "51%" }}>
             Duration: {song.duration_ms * 0.001}s
