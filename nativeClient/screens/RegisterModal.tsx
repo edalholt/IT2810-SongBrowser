@@ -5,7 +5,7 @@ import { Button } from "@rneui/themed";
 import { useState, useEffect } from "react";
 import { LOGIN } from "../GraphQL/Queries";
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
-import { isLoggedIn } from "../GraphQL/cache";
+import { isLoggedIn, songQueryVars } from "../GraphQL/cache";
 import * as SecureStore from "expo-secure-store";
 import { REGISTER } from "../GraphQL/Mutations";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -19,6 +19,7 @@ export default function RegisterModal({
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [feedback, setFeedback] = useState("");
+  const songVars = useReactiveVar(songQueryVars);
 
   // Using a mutation to register new users and send feedback if it was not successfull
   const [register, { error, data }] = useMutation(REGISTER, {
@@ -31,6 +32,7 @@ export default function RegisterModal({
   useEffect(() => {
     if (data) {
       SecureStore.setItemAsync("token", data.newUser._id).then(() => {
+        songQueryVars({ ...songVars, uid: data.newUser._id });
         isLoggedIn(true);
         setFeedback("User created");
         navigation.navigate("Root");

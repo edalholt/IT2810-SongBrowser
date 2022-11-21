@@ -1,6 +1,6 @@
 import { Button, ThemeConsumer, useTheme } from "@rneui/themed";
 import React from "react";
-import { Text, TextInput, View } from "react-native";
+import { ScrollView, Text, TextInput, View } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { isLoggedIn, songQueryVars } from "../GraphQL/cache";
 import { useQuery, useReactiveVar } from "@apollo/client";
@@ -72,12 +72,14 @@ function ProfilePage() {
         My songlist
       </Text>
       {/* Mapping over the search results creating a drop down card for each song. */}
+      <ScrollView>
       {data.getUserSongs.songs.map((song) => (
         //View is here only to make sorting dropdown appear above the DropDownCards
         <View style={{ zIndex: -1 }} key={song._id}>
           <DropDownCard {...song} />
         </View>
       ))}
+      </ScrollView>
     </>
   );
 }
