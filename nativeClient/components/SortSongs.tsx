@@ -87,7 +87,7 @@ export default function SortSongs() {
         {visible ? (
           <AntDesign name="up" size={24} color={theme.colors.white} />
         ) : (
-          <AntDesign name="down" size={24} color={theme.colors.black} />
+          <AntDesign name="down" size={24} color={"white"} />
         )}
       </TouchableOpacity>
 
