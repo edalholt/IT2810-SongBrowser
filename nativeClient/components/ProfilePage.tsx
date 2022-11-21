@@ -32,7 +32,7 @@ function ProfilePage() {
       <>
         <Button
           buttonStyle={{
-            backgroundColor: theme.colors.secondary,
+            backgroundColor: theme.colors.error,
             width: "30%",
             marginLeft: "auto",
           }}
@@ -50,7 +50,7 @@ function ProfilePage() {
     <>
       <Button
         buttonStyle={{
-          backgroundColor: theme.colors.secondary,
+          backgroundColor: theme.colors.error,
           width: "30%",
           marginLeft: "auto",
         }}
