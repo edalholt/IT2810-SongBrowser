@@ -15,12 +15,14 @@ function ProfilePage() {
   const { loading, error, data } = useQuery<userSongsDataType>(GET_USER_SONGS, {
     variables: { uid: songVars.uid },
   });
+  // Logs out the user and delets their token from Secure storage.
   const logout = () => {
     SecureStore.deleteItemAsync("token");
     isLoggedIn(false);
     songQueryVars({ ...songVars, uid: null });
   };
   if (!data)
+    // Hvorfor har vi med denne'?' Vi håndterer tom liste
     return (
       <>
         <Button title="Logout" type="solid" onPress={() => logout()} />
@@ -28,6 +30,7 @@ function ProfilePage() {
       </>
     );
   if (data.getUserSongs.songs.length == 0)
+    // if there is noe songs in the users song list...
     return (
       <>
         <Button
@@ -68,6 +71,7 @@ function ProfilePage() {
       >
         My songlist
       </Text>
+      {/* Mapping over the search results creating a drop down card for each song. */}
       {data.getUserSongs.songs.map((song) => (
         //View is here only to make sorting dropdown appear above the DropDownCards
         <View style={{ zIndex: -1 }} key={song._id}>

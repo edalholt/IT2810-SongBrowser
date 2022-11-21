@@ -13,11 +13,16 @@ import { GET_SONGS, GET_USER_SONGS } from "../GraphQL/Queries";
 
 export default function DropDownCard(song: songType) {
   const [expanded, setExpanded] = useState(false);
+  // The theme of the app based on the users settings
   const { theme, updateTheme } = useTheme();
+  // Hook making the navigation available.
   const navigation = useNavigation<LoginScreenNavProps>();
+  // The mutation for adding a list to a users songList
   const [toggleSong] = useMutation(TOGGLE_SONGLIST);
+
   const queryvar = useReactiveVar(songQueryVars);
 
+  // Style
   const styles = StyleSheet.create({
     content: {
       display: "flex",
@@ -32,6 +37,7 @@ export default function DropDownCard(song: songType) {
       alignItems: "flex-end",
     },
   });
+  // This creates an accordion (basically a drop down) for a specific song.
   return (
     <ListItem.Accordion
       containerStyle={{
@@ -81,6 +87,7 @@ export default function DropDownCard(song: songType) {
                 onPress={() => {
                   toggleSong({
                     variables: { uid: queryvar.uid, songID: song._id },
+                    // running these queries again to update the user interface with the new data.
                     refetchQueries: [GET_SONGS, GET_USER_SONGS],
                   });
                 }}
@@ -98,6 +105,7 @@ export default function DropDownCard(song: songType) {
                 onPress={() =>
                   toggleSong({
                     variables: { uid: queryvar.uid, songID: song._id },
+                    // running these queries again to update the user interface with the new data.
                     refetchQueries: [GET_SONGS, GET_USER_SONGS],
                   })
                 }

@@ -11,11 +11,13 @@ import React, { useState } from "react";
 import { color } from "@rneui/base";
 
 export default function SongBrowserScreen() {
+  // initializing states and getting the theme and a reactive variable.
   const songVars = useReactiveVar(songQueryVars);
   const { theme, updateTheme } = useTheme();
   const [activeBar, setActiveBar] = useState(false);
   const [iconColor, setIconColor] = useState("#FFFFFF");
 
+  // Creates the seach bar for searching in the DB.
   return (
     <ScrollView style={{ backgroundColor: theme.colors.primary }}>
       <View

@@ -15,6 +15,8 @@ import { useReactiveVar } from "@apollo/client";
 
 export default function Navigation() {
   return (
+    // Our primary screen, wrapped in NavigationContainer
+    // Root navigator is our stack navigator.
     <NavigationContainer>
       <RootNavigator />
     </NavigationContainer>
@@ -25,6 +27,9 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
+    // The stack navigator has root on top as default.
+    // Root contains the screens accessible by the bottom navigator.
+    // Both songBrowser and profile is part of the root screen.
     <Stack.Navigator>
       <Stack.Screen
         name="Root"
@@ -61,7 +66,7 @@ function BottomTabNavigator(): JSX.Element {
         name="SongBrowser"
         component={SongBrowserScreen}
         options={({ navigation }) => ({
-          title: "Zpotify navigatr",
+          title: "Spotify navigator",
           tabBarIcon: ({ color }) => (
             <Fontisto name="music-note" size={24} color={color} />
           ),
@@ -76,6 +81,7 @@ function BottomTabNavigator(): JSX.Element {
             <Ionicons name="md-person" size={24} color={color} />
           ),
           headerRight: () =>
+            // Only display shortcut for register modal if user is not logged in.
             !login ? (
               <Pressable
                 onPress={() => navigation.navigate("SignUp")}

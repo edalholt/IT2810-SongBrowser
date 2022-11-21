@@ -14,16 +14,20 @@ import { RootStackParamList } from "../types/navigationTypes";
 export default function RegisterModal({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, "SignUp">) {
+  // Initializing states
   const { theme, updateTheme } = useTheme();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [feedback, setFeedback] = useState("");
+
+  // Using a mutation to register new users and send feedback if it was not successfull
   const [register, { error, data }] = useMutation(REGISTER, {
     onError: (err) => {
       setFeedback("Username is not available");
     },
   });
 
+  // if a user is successfully created, they will get feedback and sendt to the page for searching.
   useEffect(() => {
     if (data) {
       SecureStore.setItemAsync("token", data.newUser._id).then(() => {
@@ -62,6 +66,7 @@ export default function RegisterModal({
           title="Sign Up"
           type="solid"
           onPress={() =>
+            // using the username and password from the two Text Input fields.
             register({ variables: { username: username, password: password } })
           }
         />

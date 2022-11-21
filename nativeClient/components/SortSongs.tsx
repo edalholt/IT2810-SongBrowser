@@ -43,6 +43,7 @@ export default function SortSongs() {
     if (visible) {
       return (
         <View>
+          {/* sets the ordering to asc if it is desc and opposite */}
           <TouchableOpacity onPress={toggleSort}>
             {asc ? (
               <Text style={styles.order}>
@@ -63,6 +64,7 @@ export default function SortSongs() {
                 />
               </Text>
             )}
+            {/* Sorts based on what the user whats to see */}
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setSortBy(SortBy.danceability)}>
             <Text style={styles.dropText}>Danceability</Text>
@@ -80,6 +82,7 @@ export default function SortSongs() {
 
   return (
     <View>
+      {/* toggles wether the dropwon menue is show or not */}
       <TouchableOpacity onPress={toggleDropdown}>
         {visible ? (
           <AntDesign name="up" size={24} color={theme.colors.white} />

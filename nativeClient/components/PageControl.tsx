@@ -13,6 +13,7 @@ export default function PageControl() {
   const [selectIndex, setSelectIndex] = useState(0);
   const [buttons, setButtons] = useState([pageIndex, pageIndex + 1, maxPage]);
 
+  // reset the pagination whenever maxpage is alterd (new search)
   useEffect(() => {
     setSelectIndex(0);
     handlePageChange(0);
@@ -22,6 +23,7 @@ export default function PageControl() {
     songQueryVars({ ...songVars, page: pageIndex });
   }, [pageIndex]);
 
+  // creates our amazig paginations, with edge cases when the page count is under 4
   const handlePageChange = (buttonValue: number) => {
     if (maxPage < 2) {
       setSelectIndex(0);
