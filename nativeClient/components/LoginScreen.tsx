@@ -64,6 +64,7 @@ export default function LoginScreen() {
 
         <Text>{feedback}</Text>
         <Button
+          buttonStyle={{ backgroundColor: theme.colors.success }}
           title="Log in"
           type="solid"
           onPress={() => {

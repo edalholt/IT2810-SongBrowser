@@ -9,7 +9,7 @@ import { LoginScreenNavProps } from "../types/navigationTypes";
 import { useMutation, useReactiveVar } from "@apollo/client";
 import { TOGGLE_SONGLIST } from "../GraphQL/Mutations";
 import { songQueryVars } from "../GraphQL/cache";
-import { GET_SONGS } from "../GraphQL/Queries";
+import { GET_SONGS, GET_USER_SONGS } from "../GraphQL/Queries";
 
 export default function DropDownCard(song: songType) {
   const [expanded, setExpanded] = useState(false);
@@ -53,16 +53,16 @@ export default function DropDownCard(song: songType) {
     >
       <ListItem containerStyle={{ backgroundColor: theme.colors.grey1 }}>
         <ListItem.Content style={styles.content}>
-          <ListItem.Title style={{ flexBasis: "100%" }}>
-            Artist:
+          <ListItem.Subtitle style={{ flexBasis: "100%" }}>
+            <ListItem.Title>Artists:</ListItem.Title>
             {"\n"}
             {song.artists.map((e) => {
               return e + "\n";
             })}{" "}
-          </ListItem.Title>
+          </ListItem.Subtitle>
 
           <ListItem.Title style={{ flexBasis: "51%" }}>
-            Danceability: {song.danceability.toFixed(4)}
+            Danceability: {(song.danceability * 100).toFixed()}%
           </ListItem.Title>
           <ListItem.Title style={{ flexBasis: "51%" }}>
             Duration: {song.duration_ms * 0.001}s
@@ -81,7 +81,7 @@ export default function DropDownCard(song: songType) {
                 onPress={() => {
                   toggleSong({
                     variables: { uid: queryvar.uid, songID: song._id },
-                    refetchQueries: [GET_SONGS],
+                    refetchQueries: [GET_SONGS, GET_USER_SONGS],
                   });
                 }}
               />
@@ -98,7 +98,7 @@ export default function DropDownCard(song: songType) {
                 onPress={() =>
                   toggleSong({
                     variables: { uid: queryvar.uid, songID: song._id },
-                    refetchQueries: [GET_SONGS],
+                    refetchQueries: [GET_SONGS, GET_USER_SONGS],
                   })
                 }
               />

@@ -10,8 +10,8 @@ export type getSongsInputs = {
 
 export type songsType = {
   songs: songType[];
-  page: number;
-  totalPages: number;
+  page?: number;
+  totalPages?: number;
 };
 
 export type songType = {
@@ -29,4 +29,8 @@ export type songType = {
 
 export type songsDataType = {
   getSongs: songsType;
+};
+
+export type userSongsDataType = {
+  getUserSongs: songsType;
 };
