@@ -7,6 +7,10 @@ Husk å kjøre `npm i` i nativeClient-mappa første gang du kjører prosjektet
 ### Hvordan kjøre app
 
 ```
+cd nativeClient
+```
+
+```
 npx expo start
 ```
 
