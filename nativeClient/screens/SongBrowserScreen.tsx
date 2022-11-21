@@ -20,7 +20,7 @@ export default function SongBrowserScreen() {
     <ScrollView style={{ backgroundColor: theme.colors.primary }}>
       <View
         style={{
-          backgroundColor: theme.colors.grey0,
+          backgroundColor: theme.colors.grey1,
           borderColor: "transparent",
           borderRadius: 10,
           height: 60,
@@ -49,8 +49,8 @@ export default function SongBrowserScreen() {
           onFocus={() => setIconColor(theme.colors.white)}
           onBlur={() => setIconColor("#FFFFFF")}
           style={{
-            color: theme.colors.background,
-            backgroundColor: theme.colors.grey0,
+            color: theme.colors.black,
+            backgroundColor: theme.colors.grey1,
             borderColor: "transparent",
             height: 60,
             flexBasis: "80%",

@@ -84,7 +84,7 @@ export default function SortSongs() {
         {visible ? (
           <AntDesign name="up" size={24} color={theme.colors.white} />
         ) : (
-          <AntDesign name="down" size={24} color="white" />
+          <AntDesign name="down" size={24} color={theme.colors.black} />
         )}
       </TouchableOpacity>
 
@@ -96,7 +96,7 @@ export default function SortSongs() {
           top: 40,
           right: 0,
           zIndex: 1,
-          backgroundColor: theme.colors.grey0,
+          backgroundColor: theme.colors.grey5,
         }}
       >
         {renderDropdown()}

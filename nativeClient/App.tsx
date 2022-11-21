@@ -19,6 +19,8 @@ export default function App() {
       white: "#FFD523",
       grey1: "#d2d3db",
       black: "black",
+      grey5: "#393e42",
+      error: "#bf2c24",
     },
     darkColors: {
       background: "#2C2E43",
@@ -26,6 +28,8 @@ export default function App() {
       white: "#FFD523",
       grey1: "#595260",
       black: "white",
+      grey5: "#393e42",
+      error: "#bf2c24",
     },
     mode: colorScheme || "dark",
   });
