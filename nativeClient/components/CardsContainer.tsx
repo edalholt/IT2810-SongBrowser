@@ -12,6 +12,7 @@ export default function cardsContainer() {
   const { theme, updateTheme } = useTheme();
   const songVars = useReactiveVar(songQueryVars);
 
+  // Fetching data with the GET_SONGS query, whith every variable in songVars.
   const { loading, error, data } = useQuery<songsDataType, getSongsInputs>(
     GET_SONGS,
     {
@@ -19,18 +20,22 @@ export default function cardsContainer() {
     }
   );
 
+  // Updates total pages for a search whenever there is a new search.
   useEffect(() => {
     if (data) {
       songTotalPages(data.getSongs.totalPages);
     }
   }, [data]);
 
+  // if an error occured, this will be displayed.
   if (error)
     return (
       <Text style={styles.title}>
         There was an error. Is the backend running?
       </Text>
     );
+
+  // While the search has not been completed yet.
   if (!data)
     return (
       <View
@@ -49,10 +54,13 @@ export default function cardsContainer() {
         />
       </View>
     );
+
+  // When everything is running smoothly, and all the desired data has been loaded.
   return (
     <>
+      {/* Mapping over the search results creating a drop down card for each song. */}
       {data.getSongs.songs.map((song) => (
-        //View is here only to make sorting dropdown appear above the DropDownCards
+        //View is here to make sorting dropdown appear above the DropDownCards and give every DropDownCard a unique key.
         <View style={{ zIndex: -1 }} key={song._id}>
           <DropDownCard {...song} />
         </View>

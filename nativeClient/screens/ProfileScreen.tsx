@@ -13,6 +13,7 @@ export default function ProfileScreen({
   const login = useReactiveVar(isLoggedIn);
   const songVars = useReactiveVar(songQueryVars);
 
+  // Checks if a user is logged in and updates the reactive variable to true if user is logged in.
   const CheckLogin = async () => {
     const token = await SecureStore.getItemAsync("token");
     if (token) {
@@ -25,6 +26,7 @@ export default function ProfileScreen({
     CheckLogin();
   }, []);
 
+  // If the ractive variable says 'login' is true, the user is taken to the profile page, otherwise the user is taken to the Login screen.
   if (login) return <ProfilePage />;
   else return <LoginScreen />;
 }

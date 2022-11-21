@@ -21,6 +21,9 @@ export default function LoginScreen() {
   const [skip, setSkip] = useState(true);
   const songVars = useReactiveVar(songQueryVars);
 
+  // Login if credentals is provided.
+  // If skip is true, no credentials is provided and this tells appollo
+  // not to make an initial request.
   const { loading, error, data } = useQuery(LOGIN, {
     variables: login,
     skip: skip,
@@ -31,8 +34,10 @@ export default function LoginScreen() {
       if (data.login._id == "Not Authorized") {
         setFeedback("Wrong username or password");
       } else {
+        // Storing id in  securestorage as a "token", if login is successfull
         SecureStore.setItemAsync("token", data.login._id).then(() => {
           isLoggedIn(true);
+          // All future fetching is done with the user ID if logged in.
           songQueryVars({ ...songVars, uid: data.login._id });
         });
       }

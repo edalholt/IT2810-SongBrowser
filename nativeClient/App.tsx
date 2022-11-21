@@ -14,12 +14,15 @@ export default function App() {
   });
 
   const theme = createTheme({
+    // Color scheme for light mode
     lightColors: {
       primary: "#9394a5",
       white: "#FFD523",
       grey1: "#d2d3db",
       black: "black",
     },
+
+    //  Color scheme for dark mode
     darkColors: {
       background: "#2C2E43",
       primary: "#2C2E43",
@@ -27,6 +30,8 @@ export default function App() {
       grey1: "#595260",
       black: "white",
     },
+
+    // Uses the users system settings to decide for dark or light mode. If it cant find any, it uses dark mode ??
     mode: colorScheme || "dark",
   });
 
