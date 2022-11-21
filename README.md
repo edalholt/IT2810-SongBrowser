@@ -20,9 +20,13 @@ Om du vil teste på telefon må du være på et NTNU-nett for at appen skal ha t
 
 # Dokumentasjon
 
-## Native komponenter
+## Komponenter
 
 Vi brukte biblioteket react native elements for å hente ferdige komponenter i tillegg til view, scrollview, textinput og andre vanlige native komponenter.
+
+### Theme
+
+Vi har brukt Theme provider fra react native elements, dette gjør at appen følger temaet (light/darkmode) fra instillingene til brukerens telefon.
 
 ## Navigasjon
 
