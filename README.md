@@ -24,6 +24,11 @@ Om du vil teste på telefon må du være på et NTNU-nett for at appen skal ha t
 
 Vi brukte biblioteket react native elements for å hente ferdige komponenter i tillegg til view, scrollview, textinput og andre vanlige native komponenter.
 
+### Pagination
+
+Vi valgte å lage en egen komponent for pagination. Dette var på grunn av at vi ikke fannt en allerede eksisterende komponent i react-native-elements som vi syntes passet til dette prosjektet. Koden tar for seg noen edge cases, dersom det ikke er flere enn 4 sider.
+Dette resulterte i en del if-setninger. Vi har testet koden grundig uten å finne noen feil og vi mener derfor at kvaliteten er på nivå med en komponent vi kunne hentet fra react-native-elements.
+
 ### Theme
 
 Vi har brukt Theme provider fra react native elements, dette gjør at appen følger temaet (light/darkmode) fra instillingene til brukerens telefon.
