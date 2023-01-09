@@ -9,7 +9,7 @@ const app = express()
 app.use(cors());
 //Allowing react on same machine, port 3000 to send requests to backend
 app.options('http://localhost:3000/', cors());
-const port:Number = 4050
+const port:Number = 4000
 
 app.use(
   "/graphql",
@@ -19,7 +19,7 @@ app.use(
     graphiql: true,
   })
 )
-const uri:string = `mongodb://admin:letmein@it2810-67.idi.ntnu.no:27017/songsDB?authSource=admin`
+const uri:string = `mongodb://root:example@host.docker.internal:27017/songsDB?authSource=admin`
 mongoose
   .connect(uri, { 
       useUnifiedTopology: true, 
