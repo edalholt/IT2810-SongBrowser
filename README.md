@@ -14,9 +14,13 @@ cd nativeClient
 npx expo start
 ```
 
-Backend kjører på http://it2810-67.idi.ntnu.no:4050/graphql.  
-Om du vil bruke lokal backend må URL-en endres i App.tsx.  
-Om du vil teste på telefon må du være på et NTNU-nett for at appen skal ha tilgang til backend.
+### Hvordan kjøre backend
+```
+docker compose up
+```
+Dette setter opp en lokal mongoDB med dummy-data, og starter backend.
+Backend kjører så på http://localhost:4000/graphql.  
+
 
 # Dokumentasjon
 

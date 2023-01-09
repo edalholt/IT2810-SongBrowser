@@ -22,6 +22,7 @@ services:
         depends_on:
             - mongo
     
+    # Backend server (ts-node) on port 4000
     node-backend:
         build:
             context: ./backend

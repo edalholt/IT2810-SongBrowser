@@ -9,7 +9,7 @@ export default function App() {
   const colorScheme = useColorScheme();
 
   const client = new ApolloClient({
-    uri: "http://it2810-67.idi.ntnu.no:4050/graphql",
+    uri: "http://localhost:4000/graphql",
     cache: new InMemoryCache(),
   });
 
