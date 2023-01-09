@@ -1,0 +1,41 @@
+services:
+    # MongoDB
+    mongo:
+        container_name: mongodb
+        image: mongo:latest
+        env_file:
+            - .env
+        ports:
+            - "27017:27017"
+
+    # Initial Seed - Will exit when default data is imported
+    mongo-seed:
+        env_file:
+            - .env
+        build:
+            context: ./mongo_seed
+            dockerfile: Dockerfile
+            args:
+                - DATABASE_URI=$DATABASE_URI
+                - USERNAME=$MONGO_INITDB_ROOT_USERNAME
+                - PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
+        depends_on:
+            - mongo
+    
+    # Backend server (ts-node) on port 4000
+    node-backend:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+            target: base
+        volumes:
+            - ./src:/home/node/app/src
+            - ./nodemon.json:/home/node/app/nodemon.json
+        container_name: node-backend
+        expose:
+            - '4000'
+        ports:
+            - '4000:4000'
+        command: npm run dev
+        depends_on:
+            - mongo
